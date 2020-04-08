@@ -1,18 +1,23 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { Chat } from './components/Chat';
 import { Header } from './components/Header';
-import { CustomList } from './components/CustomList';
+import { Router, Stack, Scene } from 'react-native-router-flux';
+import { Home } from './components/Home';
 
-export default function App() {
+export const App: React.FC = () => {
   return (
     <View style={styles.container}>
       <Header />
-      <View style={styles.content}>
-        <CustomList />
-      </View>
+      <Router>
+        <Stack key="root">
+          <Scene key="home" component={Home} title="Home" />
+          <Scene key="chat" component={Chat} title="Chat" />
+        </Stack>
+      </Router>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -23,3 +28,5 @@ const styles = StyleSheet.create({
     padding: 40
   }
 });
+
+export default App;
