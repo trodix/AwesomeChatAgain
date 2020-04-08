@@ -22,7 +22,7 @@ export const MessageList: React.FC<MessageListProps> = ({ username }) => {
     },
     {
       text: 'Mon super message 3',
-      author: 'Sébastien',
+      author: 'trodix',
       timestamp: new Date(),
       key: '6'
     },
@@ -34,7 +34,7 @@ export const MessageList: React.FC<MessageListProps> = ({ username }) => {
     },
     {
       text: 'Mon super message 5',
-      author: 'Sébastien',
+      author: 'trodix',
       timestamp: new Date(),
       key: '7'
     },
@@ -52,7 +52,7 @@ export const MessageList: React.FC<MessageListProps> = ({ username }) => {
     },
     {
       text: 'Mon super message 8',
-      author: 'Sébastien',
+      author: 'trodix',
       timestamp: new Date(),
       key: '8'
     }

@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 export const Home: React.FC = () => {
@@ -30,7 +36,9 @@ export const Home: React.FC = () => {
           placeholder="Nom de la room"
           onChangeText={(text) => setRoom(text)}
         />
-        <Button title="Go to chat" onPress={goHandler} />
+        <TouchableOpacity style={styles.goBtn} onPress={goHandler}>
+          <Text style={styles.goBtnText}>Let's chat !</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -39,20 +47,20 @@ export const Home: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#eee'
   },
   h1: {
     fontSize: 25,
-    fontWeight: 'bold',
-    marginTop: 60
+    fontWeight: 'bold'
   },
   formContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    marginVertical: 40,
+    paddingHorizontal: 40
   },
   input: {
     backgroundColor: '#fff',
@@ -60,7 +68,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginHorizontal: 15,
     marginBottom: 10,
-    width: '80%',
+    width: '100%',
     paddingVertical: 10
+  },
+  goBtn: {
+    backgroundColor: '#64b5f6',
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 8
+  },
+  goBtnText: {
+    color: '#fff',
+    fontSize: 18
   }
 });

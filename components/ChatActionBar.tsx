@@ -1,26 +1,27 @@
 import React from 'react';
-import { View, TextInput, StyleSheet, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export const ChatActionBar: React.FC = () => {
-  const [value, onChangeText] = React.useState('');
+  const [message, setMessage] = React.useState('');
 
   const sendHandler = () => {
-    sendMessage();
-  };
-
-  const sendMessage = () => {
-    console.log('message sent !');
+    console.log('message sent !', message);
+    setMessage(''); // clear the TextInput value
   };
 
   return (
     <View style={styles.actionBarContainer}>
-      <TextInput
-        style={styles.chatInput}
-        value={value}
-        placeholder="Votre message"
-        onChangeText={(text) => onChangeText(text)}
-      />
-      <Button title="Envoyer" onPress={sendHandler} />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.chatInput}
+          value={message}
+          placeholder="Votre message"
+          onChangeText={(value) => setMessage(value)}
+        />
+        <TouchableOpacity style={styles.sendBtn} onPress={sendHandler}>
+          <Text style={styles.sendBtnText}>Send</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -31,7 +32,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: 10
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 20
   },
   chatInput: {
     height: 40,
@@ -40,7 +50,16 @@ const styles = StyleSheet.create({
     color: '#777',
     borderRadius: 20,
     paddingHorizontal: 15,
-    marginRight: 15,
+    marginRight: 5,
     flex: 1
+  },
+  sendBtn: {
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    backgroundColor: '#64b5f6',
+    borderRadius: 50
+  },
+  sendBtnText: {
+    color: '#fff'
   }
 });
