@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
-import { Message } from '../components/Message';
+import { Message } from './Message';
 
 type MessageListProps = {
   username: string;

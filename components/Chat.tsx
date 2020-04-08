@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { MessageList } from '../components/MessageList';
-import { ChatActionBar } from '../components/ChatActionBar';
+import { MessageList } from './MessageList';
+import { ChatActionBar } from './ChatActionBar';
 
 type chatProps = {
   username: string;

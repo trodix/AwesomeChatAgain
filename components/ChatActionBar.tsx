@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 export const ChatActionBar: React.FC = () => {
   const [message, setMessage] = React.useState('');
