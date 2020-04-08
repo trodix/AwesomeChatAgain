@@ -3,10 +3,15 @@ import { View, StyleSheet } from 'react-native';
 import { MessageList } from '../components/MessageList';
 import { ChatActionBar } from '../components/ChatActionBar';
 
-export const Chat: React.FC = () => {
+type chatProps = {
+  username: string;
+  room: string;
+};
+
+export const Chat: React.FC<chatProps> = ({ username }) => {
   return (
     <View style={styles.chatContainer}>
-      <MessageList />
+      <MessageList username={username} />
       <ChatActionBar />
     </View>
   );

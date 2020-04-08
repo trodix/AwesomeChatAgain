@@ -10,14 +10,14 @@ export const ChatActionBar: React.FC = () => {
 
   const sendMessage = () => {
     console.log('message sent !');
-  }
+  };
 
   return (
     <View style={styles.actionBarContainer}>
       <TextInput
         style={styles.chatInput}
         value={value}
-        placeholder="Useless Placeholder"
+        placeholder="Votre message"
         onChangeText={(text) => onChangeText(text)}
       />
       <Button title="Envoyer" onPress={sendHandler} />
