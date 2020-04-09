@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import {
-  TouchableOpacity,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { useDispatch } from 'react-redux';
+import { chatActions } from '../actions';
 
 export const Home: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [user, setUser] = useState('');
   const [room, setRoom] = useState('');
+  const dispatch = useDispatch();
 
   const goHandler = () => {
-    if (username && room) {
-      Actions.chat({ username, title: `Room ${room}` });
-      setUsername('');
-      setRoom('');
-    }
+    dispatch(chatActions.join(user, room));
+    Actions.chat({ user, title: `Room ${room}` });
+    setUser('');
+    setRoom('');
   };
 
   return (
@@ -26,9 +28,9 @@ export const Home: React.FC = () => {
       <View style={styles.formContainer}>
         <TextInput
           style={styles.input}
-          value={username}
+          value={user}
           placeholder="Votre pseudo"
-          onChangeText={(text) => setUsername(text)}
+          onChangeText={(text) => setUser(text)}
         />
         <TextInput
           style={styles.input}

@@ -1,16 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import moment from 'moment';
-
-type message = {
-  text: string;
-  author: string;
-  timestamp: Date;
-  key: string;
-};
+import { Message as MessageType } from '../types';
 
 type MessageProps = {
-  message: message;
+  message: MessageType;
   style: string;
 };
 
@@ -31,7 +25,7 @@ export const Message: React.FC<MessageProps> = ({
             : { borderBottomLeftRadius: 0 }
         ]}>
         <Text style={[{ color: isAuthor ? 'black' : 'white' }]}>
-          {message.text}
+          {message.content}
         </Text>
       </View>
       <Text

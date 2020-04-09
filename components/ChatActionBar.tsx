@@ -6,13 +6,17 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { chatActions } from '../actions';
 
 export const ChatActionBar: React.FC = () => {
-  const [message, setMessage] = React.useState('');
+  const [contentMessage, setContentMessage] = React.useState('');
+  const dispatch = useDispatch();
 
   const sendHandler = () => {
-    console.log('message sent !', message);
-    setMessage(''); // clear the TextInput value
+    dispatch(chatActions.sendMessage(contentMessage));
+    console.log('message sent !', contentMessage);
+    setContentMessage(''); // clear the TextInput value
   };
 
   return (
@@ -20,9 +24,9 @@ export const ChatActionBar: React.FC = () => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.chatInput}
-          value={message}
+          value={contentMessage}
           placeholder="Votre message"
-          onChangeText={(value) => setMessage(value)}
+          onChangeText={(value) => setContentMessage(value)}
         />
         <TouchableOpacity style={styles.sendBtn} onPress={sendHandler}>
           <Text style={styles.sendBtnText}>Send</Text>
