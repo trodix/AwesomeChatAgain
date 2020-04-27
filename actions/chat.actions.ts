@@ -3,7 +3,8 @@ import {
   JOIN_SUCCESS,
   FAILURE,
   SEND_MESSAGE_REQUEST,
-  SEND_MESSAGE_SUCCESS
+  SEND_MESSAGE_SUCCESS,
+  Message
 } from '../types';
 import { chatService } from '../services';
 
@@ -31,10 +32,10 @@ function sendMessage(messageContent: string) {
     dispatch({ type: SEND_MESSAGE_REQUEST, messageContent });
     chatService
       .sendMessage(messageContent)
-      .then((message) => {
+      .then((message: Message) => {
         dispatch({ type: SEND_MESSAGE_SUCCESS, message });
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         dispatch({ type: FAILURE, error });
       });
   };

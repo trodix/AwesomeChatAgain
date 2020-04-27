@@ -30,6 +30,7 @@ class Chat {
       author: this.getUser(),
       created_at: new Date()
     };
+
     return this.db.post(message).then(({ id }: any) => {
       return {
         ...message,

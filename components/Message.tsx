@@ -33,7 +33,7 @@ export const Message: React.FC<MessageProps> = ({
           styles.meta,
           { alignSelf: isAuthor ? 'flex-end' : 'flex-start' }
         ]}>
-        {message.author}, {moment(message.timestamp).fromNow()}
+        {message.author}, {moment(message.created_at).fromNow()}
       </Text>
     </View>
   );
