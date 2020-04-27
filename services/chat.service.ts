@@ -3,18 +3,36 @@ import { Message } from '../types';
 
 class Chat {
   private user: string = 'Anonymous';
-  private room: string = 'général';
-  private db?: any;
+  private room: string = 'general';
+  private currentRoom?: any;
+  private remoteDBurl: String = 'http://gathor.org:5984';
+  private remoteDB?: any;
+  // private remoteMessageDB?: any;
 
   public constructor() {}
 
-  join(user: string, room: string) {
+  join(user: string, room: string, onSync: Function, onError: Function) {
     this.setUser(user);
     this.setRoom(room);
 
-    this.db = new PouchDB(this.room);
+    if (!/^_/.test(this.getRoom())) {
+      onError('This name is forbidden');
+    }
 
-    return this.db
+    this.currentRoom = new PouchDB(this.getRoom());
+    this.remoteDB = this.currentRoom.sync(
+      `${this.remoteDBurl}/${this.getRoom()}`,
+      {
+        live: true,
+        retry: true,
+        continus: true
+      }
+    );
+
+    this.remoteDB.on('change', this.handleChange(onSync));
+    this.remoteDB.on('error', this.handleError(onError));
+
+    return this.currentRoom
       .allDocs({
         include_docs: true,
         descending: true
@@ -31,12 +49,26 @@ class Chat {
       created_at: new Date()
     };
 
-    return this.db.post(message).then(({ id }: any) => {
+    return this.currentRoom.post(message).then(({ id }: any) => {
       return {
         ...message,
-        key: id
+        _id: id
       };
     });
+  }
+
+  handleChange(callback: Function) {
+    return (change: any) => {
+      console.log('save');
+      callback(change);
+    };
+  }
+
+  handleError(callback: Function) {
+    return (error: any) => {
+      console.log('error');
+      callback(error);
+    };
   }
 
   setUser(user: string) {
@@ -50,7 +82,9 @@ class Chat {
   }
 
   setRoom(room: string) {
-    this.room = room;
+    if (room.length > 0) {
+      this.room = room;
+    }
 
     return this.room;
   }

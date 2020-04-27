@@ -31,7 +31,7 @@ interface SendMessageSuccessAction {
 }
 
 export interface Message {
-  key?: number | string;
+  _id?: number | string;
   content: string;
   author: string;
   created_at: Date;

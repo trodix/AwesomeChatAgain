@@ -16,6 +16,7 @@ export const MessageList: React.FC = () => {
   return (
     <FlatList
       data={messages}
+      keyExtractor={(item, index) => item._id}
       renderItem={({ item }) => (
         <Message message={item} style={item.author === user ? 'me' : 'other'} />
       )}

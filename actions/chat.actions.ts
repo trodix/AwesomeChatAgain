@@ -17,12 +17,17 @@ function join(user: string, room: string) {
   return (dispatch: Function) => {
     dispatch({ type: JOIN_REQUEST, user, room });
     chatService
-      .join(user, room)
+      .join(
+        user,
+        room,
+        (messages: []) => dispatch(syncSuccess(messages)),
+        (error: any) => dispatch(syncError(error))
+      )
       .then((messages: []) => {
-        dispatch({ type: JOIN_SUCCESS, messages });
+        syncSuccess(messages);
       })
-      .catch((error: Error) => {
-        dispatch({ type: FAILURE, error });
+      .catch((err: any) => {
+        syncError(err);
       });
   };
 }
@@ -39,4 +44,12 @@ function sendMessage(messageContent: string) {
         dispatch({ type: FAILURE, error });
       });
   };
+}
+
+function syncSuccess(messages: []) {
+  return (dispatch: Function) => dispatch({ type: JOIN_SUCCESS, messages });
+}
+
+function syncError(error: any) {
+  return (dispatch: Function) => dispatch({ type: FAILURE, error });
 }
