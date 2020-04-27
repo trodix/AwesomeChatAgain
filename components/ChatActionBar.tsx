@@ -14,9 +14,11 @@ export const ChatActionBar: React.FC = () => {
   const dispatch = useDispatch();
 
   const sendHandler = () => {
-    dispatch(chatActions.sendMessage(contentMessage));
-    console.log('message sent !', contentMessage);
-    setContentMessage(''); // clear the TextInput value
+    if (contentMessage.length > 0) {
+      dispatch(chatActions.sendMessage(contentMessage));
+      console.log('message sent !', contentMessage);
+      setContentMessage(''); // clear the TextInput value
+    }
   };
 
   return (

@@ -24,7 +24,7 @@ class Chat {
       {
         live: true,
         retry: true,
-        continus: true
+        continuous: true
       }
     );
 
@@ -58,8 +58,9 @@ class Chat {
       .then((messages: any) => {
         return messages.rows
           .map((row: any) => row.doc)
+          .filter((i: Message) => !!i.content)
           .sort((a: Message, b: Message) =>
-            b.created_at < a.created_at ? 1 : -1
+            new Date(b.created_at) < new Date(a.created_at) ? 1 : -1
           );
       });
   }

@@ -21,7 +21,6 @@ export const MessageList: React.FC = () => {
       data={messages}
       ref={(ref) => (listEl = ref)}
       onContentSizeChange={() => listEl.scrollToEnd({ animated: true })}
-      onLayout={() => listEl.scrollToEnd({ animated: true })}
       renderItem={({ item }) => (
         <Message message={item} style={item.author === user ? 'me' : 'other'} />
       )}
