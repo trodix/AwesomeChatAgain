@@ -3,6 +3,7 @@ export const JOIN_SUCCESS = 'JOIN_SUCCESS';
 export const FAILURE = 'FAILURE';
 export const SEND_MESSAGE_REQUEST = 'SEND_MESSAGE_REQUEST';
 export const SEND_MESSAGE_SUCCESS = 'SEND_MESSAGE_SUCCESS';
+export const SYNC_SUCCESS = 'SYNC_SUCCESS';
 
 interface JoinRequestAction {
   type: typeof JOIN_REQUEST;
@@ -25,13 +26,18 @@ interface SendMessageRequestAction {
   message: Message;
 }
 
+export interface syncSuccessAction {
+  type: typeof SYNC_SUCCESS;
+  messages: Message[];
+}
+
 interface SendMessageSuccessAction {
   type: typeof SEND_MESSAGE_SUCCESS;
   message: Message;
 }
 
 export interface Message {
-  _id?: number | string;
+  key?: number | string;
   content: string;
   author: string;
   created_at: Date;
@@ -49,4 +55,5 @@ export type ChatActionTypes =
   | JoinSuccessAction
   | FailureAction
   | SendMessageRequestAction
-  | SendMessageSuccessAction;
+  | SendMessageSuccessAction
+  | syncSuccessAction;

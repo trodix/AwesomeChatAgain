@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { FlatList } from 'react-native';
 import { Message } from './Message';
 import { Message as MessageType } from '../types';
@@ -11,12 +11,17 @@ export const MessageList: React.FC = () => {
   const messages: MessageType[] = useSelector(
     (state: RootState) => state.chat.messages
   );
-  // console.log(messages);
+
+  let listEl: any = createRef();
+
+  console.log(messages);
 
   return (
     <FlatList
       data={messages}
-      keyExtractor={(item, index) => item._id}
+      ref={(ref) => (listEl = ref)}
+      onContentSizeChange={() => listEl.scrollToEnd({ animated: true })}
+      onLayout={() => listEl.scrollToEnd({ animated: true })}
       renderItem={({ item }) => (
         <Message message={item} style={item.author === user ? 'me' : 'other'} />
       )}

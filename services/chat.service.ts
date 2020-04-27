@@ -7,7 +7,6 @@ class Chat {
   private currentRoom?: any;
   private remoteDBurl: String = 'http://gathor.org:5984';
   private remoteDB?: any;
-  // private remoteMessageDB?: any;
 
   public constructor() {}
 
@@ -32,14 +31,7 @@ class Chat {
     this.remoteDB.on('change', this.handleChange(onSync));
     this.remoteDB.on('error', this.handleError(onError));
 
-    return this.currentRoom
-      .allDocs({
-        include_docs: true,
-        descending: true
-      })
-      .then((messages: any) => {
-        return messages.rows.map((row: any) => row.doc);
-      });
+    return this.getListMessages();
   }
 
   sendMessage(messageContent: string) {
@@ -49,18 +41,37 @@ class Chat {
       created_at: new Date()
     };
 
-    return this.currentRoom.post(message).then(({ id }: any) => {
+    return this.currentRoom.post(message).then(({ _id }: any) => {
       return {
         ...message,
-        _id: id
+        key: _id
       };
     });
   }
 
+  getListMessages() {
+    return this.currentRoom
+      .allDocs({
+        include_docs: true,
+        descending: true
+      })
+      .then((messages: any) => {
+        return messages.rows
+          .map((row: any) => row.doc)
+          .sort((a: Message, b: Message) =>
+            b.created_at < a.created_at ? 1 : -1
+          );
+      });
+  }
+
   handleChange(callback: Function) {
     return (change: any) => {
+      this.getListMessages()
+        .then((messageList: []) => {
+          callback(messageList);
+        })
+        .catch(console.error);
       console.log('save');
-      callback(change);
     };
   }
 

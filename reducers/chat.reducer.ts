@@ -6,7 +6,8 @@ import {
   ChatActionTypes,
   Message,
   SEND_MESSAGE_SUCCESS,
-  SEND_MESSAGE_REQUEST
+  SEND_MESSAGE_REQUEST,
+  SYNC_SUCCESS
 } from '../types';
 
 const initialState: State = {
@@ -27,7 +28,7 @@ export const chat = (state = initialState, action: ChatActionTypes): State => {
     case JOIN_SUCCESS:
       return {
         ...state,
-        messages: (action.messages as unknown) as Message[]
+        messages: action.messages
       };
     case FAILURE:
       return {
@@ -37,10 +38,14 @@ export const chat = (state = initialState, action: ChatActionTypes): State => {
     // case SEND_MESSAGE_REQUEST:
     //   return { };
     case SEND_MESSAGE_SUCCESS:
-      console.log(action.message);
       return {
         ...state,
         messages: [...state.messages, action.message]
+      };
+    case SYNC_SUCCESS:
+      return {
+        ...state,
+        messages: action.messages
       };
   }
 

@@ -4,6 +4,7 @@ import {
   FAILURE,
   SEND_MESSAGE_REQUEST,
   SEND_MESSAGE_SUCCESS,
+  SYNC_SUCCESS,
   Message
 } from '../types';
 import { chatService } from '../services';
@@ -24,10 +25,10 @@ function join(user: string, room: string) {
         (error: any) => dispatch(syncError(error))
       )
       .then((messages: []) => {
-        syncSuccess(messages);
+        dispatch({ type: JOIN_SUCCESS, messages });
       })
       .catch((err: any) => {
-        syncError(err);
+        dispatch({ type: FAILURE, err });
       });
   };
 }
@@ -47,9 +48,9 @@ function sendMessage(messageContent: string) {
 }
 
 function syncSuccess(messages: []) {
-  return (dispatch: Function) => dispatch({ type: JOIN_SUCCESS, messages });
+  return { type: SYNC_SUCCESS, messages };
 }
 
 function syncError(error: any) {
-  return (dispatch: Function) => dispatch({ type: FAILURE, error });
+  return { type: FAILURE, error };
 }
